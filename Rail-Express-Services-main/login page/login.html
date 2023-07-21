@@ -1,0 +1,112 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Login - </title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <!-- //Meta tag Keywords -->
+    <link rel="icon" type="image/png" href="../logo.png"/>
+    <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <!--/Style-CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <!--//Style-CSS -->
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" media="all">
+
+</head>
+
+<body>
+    <div class="w3l-signinform">
+        <!-- container -->
+        <div class="wrapper">
+            <!-- main content -->
+            <div class="w3l-form-info">
+                <div class="w3_info">
+                    <h1>Welcome Back</h1>
+                    <p class="sub-para"></p>
+                    <h2>Log In</h2>
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <span><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <input type="email" name=" "placeholder="Email or Username" id="mailid" required="">
+                        </div>
+                        <div class="input-group two-groop">
+                            <span><i class="fa fa-key" aria-hidden="true"></i></span>
+                            <input type="Password" placeholder="Password" id="pass" required="">
+                        </div>
+                        <div class="form-row bottom">
+                            <div class="form-check">
+                                <input type="checkbox" id="remenber" name="remenber" value="remenber" checked>
+                                <label for="remenber"> Remember me?</label>
+                            </div>
+                            <a onclick="resetPasswordFunction()" class="forgot">Forgot password?</a>
+                        </div>
+                        <button class="contact1-form-btn" type="submit">
+                            <span>
+                                Log in
+                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </form>
+                
+                    <p class="account">Don't have an account? <a href="Signup.html">Register</a></p>
+                    
+                </div>
+            </div>
+            <!-- //main content -->
+
+</body>
+
+<script>
+
+function LoginUser(){
+  var email=document.getElementById('mailid').value;
+  var password=document.getElementById('pass').value;
+  firebase.auth().signInWithEmailAndPassword(email,password).then(function(){
+   var id=firebase.auth().currentUser.uid;
+   localStorage.setItem('id',id);
+   window.location.replace('../dashboard.html')
+  }).catch(function(error){
+
+   var errorCode=error.code;
+   var errorMsg=error.message;
+   window.alert("Error : " +errorMsg)
+
+  });
+ }
+
+const mailField = document.getElementById('mailid');
+const labels = document.getElementsByTagName('label');
+const resetPassword = document.getElementById('resetPassword');
+const successModal = document.querySelector('.success');
+const failureModal = document.querySelector('.failure');
+const auth = firebase.auth();
+
+
+ const resetPasswordFunction = () => {
+    const email = mailField.value;
+    if(!email)
+    {
+        window.alert("Please enter a registered email");
+    }
+    else
+    {
+        
+        auth.sendPasswordResetEmail(email).then(() => {
+    
+        window.alert('Password Reset Email Sent Successfully!');
+    
+    }).catch(function(error){
+      
+        window.alert("Please enter a registered email");
+    });
+    }
+    }
+</script>
+
+</html>
